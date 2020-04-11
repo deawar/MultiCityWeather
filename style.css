@@ -1,0 +1,34 @@
+.jumbotron {
+    background: url('./Assets/rain-puddle-png-1920_1080.png') no-repeat center center;
+    background-size: cover;
+    height: 10px;
+    font-family: Montserrat, sans-serif;
+
+}
+
+#rightSide {
+  padding-left: 30px;
+}
+.firveCard {
+  margin-left: 10px;
+}
+
+.badge-danger {
+  background-color: #e53210;
+}
+
+.badge-warning {
+  background-color: #fff300;
+  }
+
+.badge-success {
+  background-color: #3ea72d;
+  }
+
+.badge-info {
+  background-color: #f18b00;
+  }
+
+.badge-inverse {
+  background-color: #b567a4;
+  }  

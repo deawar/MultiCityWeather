@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/moment"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <title>MultiCityWeather</title>
+</head>
+
+<body>
+  <div class="jumbotron sm-light text-center">
+    <h1 class="display-6 text-center text-dark">Weather Dashboard</h1>
+  </div>
+  <!-- first row -->
+  <div class="container-fluid">
+  <div class="row">
+        <!-- Left search column -->
+        <div class="col-3-sm">
+          <div class="card bg-light" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title dark-text">Search for a City:</h5>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" id="getCity" placeholder="Enter City" aria-label="City" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+                </div>
+              </div>
+              <div class="alert-light" role="alert">
+                <ul class="list-group">
+                  <li class="list-group-item">City1</li>
+                  <li class="list-group-item">City2</li>
+                  <li class="list-group-item">City3</li>
+                  <li class="list-group-item">City4</li>
+                  <li class="list-group-item">City5</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-9" id="rightSide">
+          <div class="card bg-light " style="width: auto;">
+            <div class="card-body">
+              <h2 class="text-left dark-text city"><span id="search-city"></span>  (<span></span>) <span class="curent-weather-icon"></span></h2>
+              
+              <h4 class="dark-text text-left" id="search-city-temp">Temprature: <span></span>°F</h4> <!--'alt 0176' on the number pad is degree symbol-->
+              
+              <h4 class="dark-text text-left" id="search-city-humidity">Humidity: <span></span>%</h4>
+              
+              <h4 class="dark-text text-left" id="search-city-wind">Wind Speed: <span></span>MPH</h4>
+              
+              <h4 class="dark-text text-left" id="search-city-uv">UV Index: <span class="badge badge-danger">9.7</span></h4>
+            </div>
+          </div>
+          <h2 class="text-left dark-text">5-Day Forecast:</h2> 
+          <div class="card-deck">
+            
+ 
+              <div class=“col-2"> 
+                <div class="card bg-primary" style="width: 155px;">
+                  <div class="card-body">
+                    <h4 class="text-white" id="day1">date+1 day</h4>
+                    <i class="fas fa-sun fa-2x fa-spin" id="day1"></i>
+                    <p class="text-white" id="day1-temp">Temp: <span></span></i>°F</p>
+                    <p class="text-white" id="day1-humd">Humidity: <span></span>%</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class=“col-2">
+                <div class="card bg-primary" style="width: 155px;">
+                  <div class="card-body" class="fiveCard">
+                      <h4 class="text-white" id="day2">date+2 day</h4>
+                      <i class="fas fa-sun fa-2x fa-spin" id="day2"></i>
+                      <p class="text-white" id="day2-temp">Temp: <span></span></i>°F</p>
+                      <p class="text-white" id="day2-humd">Humidity: <span></span>%</p>
+                  </div>
+                </div> 
+              </div> 
+              <div class=“col-2" >
+                <div class="card bg-primary" style="width: 155px;">
+                    <div class="card-body">
+                      <h4 class="text-white" id="day3">date+3 day</h4>
+                      <i class="fas fa-sun fa-2x fa-spin" id="day3"></i>
+                      <p class="text-white" id="day3-temp">Temp: <span></span></i>°F</p>
+                      <p class="text-white" id="day3-humd">Humidity: <span></span>%</p>
+                    </div>
+                </div>
+              </div> 
+              
+              <div class=“col-2" >
+                <div class="card bg-primary" style="width: 155px;">
+                    <div class="card-body">
+                      <h4 class="text-white" id="day4">date+4 day</h4>
+                      <i class="fas fa-sun fa-2x fa-spin" id="day4"></i>
+                      <p class="text-white" id="day4-temp">Temp: <span></span></i>°F</p>
+                      <p class="text-white" id="day4-humd">Humidity: <span></span>%</p>
+                    </div>
+                  </div> 
+              </div>
+              <div class=“col-2">
+                <div class="card bg-primary" style="width: 155px;">
+                  <div class="card-body">
+                    <h4 class="text-white" id="day5">date+5 day</h4>
+                    <i class="fas fa-sun fa-2x fa-spin" id="day5"></i>
+                    <p class="text-white" id="day5-temp">Temp: <span></span></i>°F</p>
+                    <p class="text-white" id="day5-humd">Humidity: <span></span>%</p>
+                  </div>
+                </div>
+              </div> 
+              
+            </div>  
+        </div>
+      </div>
+
+      
+     
+
+    <script src="./script.js"></script>
+    
+</body>
+</html>
