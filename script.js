@@ -215,6 +215,7 @@ $(document).ready(function() {
 $(document).on("click", ".list-group-item", function(){
     var cityValue = $(this).text();
     console.log("li Clicked",cityValue);
+    $(".alert").hide();
     $("#getCity").val("");
     buildURL(cityValue);
 });    
