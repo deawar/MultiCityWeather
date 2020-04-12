@@ -17,6 +17,22 @@ ul {
   list-style-type: none;
 }
 
+.alert{
+display: none;
+}
+
+ul { 
+  color:#000;
+  background-color:#ccc;
+  border: 1px solid #666;
+  /* border-radius: 5px;
+  padding: 5px 30px; */
+}
+
+ul:hover > div {
+  background-color:rgba(146, 27, 27, 0.1);
+}
+
 #rightSide {
   padding-left: 30px;
 }
