@@ -1,9 +1,16 @@
+html {
+  font-size: 1rem;
+}
+h1{
+  font-size: 2rem;
+}
+
 .jumbotron {
     background: url('./Assets/rain-puddle-png-1920_1080.png') no-repeat center center;
     background-size: cover;
     height: 10px;
     font-family: Montserrat, sans-serif;
-
+    font-size: 2rem;
 }
 
 ul {
