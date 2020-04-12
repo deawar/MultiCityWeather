@@ -118,10 +118,10 @@ $(document).ready(function() {
                 var cityListGroupItem = $("<li class='list-group-item'>");
                 var cityName = response.name;
                 var iconCode = response.weather[0].icon;
-                console.log("current: ", iconCode);
+                console.log(" Line 121 current: ", iconCode);
                 var iconUrl = "https://openweathermap.org/img/w/" + iconCode + ".png";
                 console.log("current city: ", cityName);
-                $(".curent-weather-icon").html("<img src='" + iconUrl  + "'>");
+                $("#weatherIcon").html("<img src='" + iconUrl  + "'>");
                 //add to searched list
                 ul.prepend("<li class='list-group-item'>" + getCity + "</li>");
                 localStorage.setItem("city", getCity);
@@ -136,20 +136,26 @@ $(document).ready(function() {
             })
                 .then(function (response) {
                     console.log("URL Sent: ", queryURLforecast);
-                    
+                    console.log("forcast: ", response);
+                    console.log("temp1: ", response.list[1].main.temp_max);
                     for(var i = 0; i < 5; i++) {
                         console.log("inside for loop");
                         let nextDay = "#day" + (i + 1);
-                        console.log("In for loop :", nextDay);
-                        let myIconCode = response.list[i].weather[i].icon;
-                        console.log("In for loop :", myIconCode);
+                        console.log("line 144 In for loop :", nextDay, i);
+                        let weather = `weather[0]`;
+                        let myIconCode = response.list[i].weather.icon;
+                        let myTemp = response.list[i].main.temp_max;
+                        let myHumidity = response.list[i].main.humidity;
+                        console.log("line 147 myTemp: ",mytemp);
+                        console.log("IconCode: ", myIconCode, i);
+                        console.log("line 148  In for loop :", myIconCode);
                         myIconUrl = "https://openweathermap.org/img/w/" + myIconCode + ".png";
-                        console.log("Line 147 In for loop :", myIconUrl);
+                        console.log("Line 150 In for loop :", myIconUrl);
                         let myDay = moment().add((1 + i),'day').format('l');
-                        $(".myDate" + i).html(myDay);
-                        $(".forecast-weather-icon").html("<img src=" + iconUrl  + ">");
-                        $(nextDay + "-temp").text("Temp: " + response.list[0].main.temp_max + "°F");
-                        $(nextDay + "-humd").text(response.list[i].main.humidity)
+                        $("#day" + i).html(myDay);
+                        $(".forcastIcon").html("<img src=" + myIconUrl  + ">");
+                        $(nextDay + "-temp").text("Temp: " + myTemp + "°F");
+                        $(nextDay + "-humd").text("Humidity: " + myHumidity + "%")
                     }
                 })
                 // .catch(function (error) {
@@ -192,6 +198,11 @@ $("#button-addon2").on("click", function() {
     checkCity(getCity);
 })
 
+$("#list-group-item p").on("click", function(){
+    var cityValue = $(this).text();
+    getWeather(cityValue);
+});    
+
 // $(".li").on("click", function(){
 //     console.log("element clicked: ",$(this).find(".list-group-item").text());
 // });
@@ -223,5 +234,4 @@ $("#button-addon2").on("click", function() {
     // Examples of API calls:
 
     // api.openweathermap.org/data/2.5/uvi?lat=37.75&lon=-122.37
-
 });
