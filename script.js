@@ -137,25 +137,22 @@ $(document).ready(function() {
                 .then(function (response) {
                     console.log("URL Sent: ", queryURLforecast);
                     console.log("forcast: ", response);
-                    console.log("temp1: ", response.list[1].main.temp_max);
+                    console.log("temp5: ", response.list[4].main.temp_max);
                     for(var i = 0; i < 5; i++) {
-                        console.log("inside for loop");
+                        let myDay = moment().add((1 + i),'day').format('l');
                         let nextDay = "#day" + (i + 1);
                         console.log("line 144 In for loop :", nextDay, i);
-                        let weather = `weather[0]`;
-                        let myIconCode = response.list[i].weather.icon;
-                        let myTemp = response.list[i].main.temp_max;
-                        let myHumidity = response.list[i].main.humidity;
-                        console.log("line 147 myTemp: ",mytemp);
-                        console.log("IconCode: ", myIconCode, i);
-                        console.log("line 148  In for loop :", myIconCode);
+                        $(nextDay).html(myDay);
+                        let myIconCode = response.list[i].weather[0].icon;
                         myIconUrl = "https://openweathermap.org/img/w/" + myIconCode + ".png";
-                        console.log("Line 150 In for loop :", myIconUrl);
-                        let myDay = moment().add((1 + i),'day').format('l');
-                        $("#day" + i).html(myDay);
                         $(".forcastIcon").html("<img src=" + myIconUrl  + ">");
+                        let myTemp = response.list[i].main.temp_max;
                         $(nextDay + "-temp").text("Temp: " + myTemp + "°F");
-                        $(nextDay + "-humd").text("Humidity: " + myHumidity + "%")
+                        let myHumidity = response.list[i].main.humidity;
+                        $(nextDay + "-humd").text("Humidity: " + myHumidity + "%");
+                    
+                    
+                    
                     }
                 })
                 // .catch(function (error) {
@@ -207,7 +204,7 @@ $("#list-group-item p").on("click", function(){
 //     console.log("element clicked: ",$(this).find(".list-group-item").text());
 // });
 
-    const searchbox = document.querySelector('#button-addon2');
+    //const searchbox = document.querySelector('#button-addon2');
     //searchbox.addEventListener('keypress', setQuery);
 
     //example of how to call openWeather by coordinates
