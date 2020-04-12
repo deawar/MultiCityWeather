@@ -9,19 +9,27 @@ $(document).ready(function() {
         units: "&units=imperial&",
         uvi: "uvi?"
     };
-    var searchHistory = [];
-    searchHistory.unshift(JSON.parse(localStorage.getItem("city[0]")));// || checkCity();
-    var getCity = searchHistory[0]; //|| checkCity();
-    console.log("searchHistory[0]: ", searchHistory[0]);
-    var getCity = localStorage.getItem('city');
-    searchHistory.forEach(function(oldcity){
-        let $getCity =$("<li>").text(oldcity)
-        $('list-group').append($getCity)
+    // var searchHistory = [];
+    // searchHistory = JSON.parse(localStorage.getItem('city')) || []
+
+    var searchHistory = localStorage.getItem("city") ? JSON.parse(localStorage.getItem('city')) : []
+
+    console.log(searchHistory)
+    // var getCity = searchHistory[0]; //|| checkCity();
+    //add Cities to search list used in buildURL/get currentweather
+    const ul = $("ul").addClass('list-group'); //get 'ul' element by tag
+    console.log("-----------------searchHistory[0]: ", searchHistory,"---------------------");
+    // var getCity = localStorage.getItem('city');
+    searchHistory.forEach(function(oldcity, i){
+        renderBtns(oldcity)
+        if(i === searchHistory.length -1){
+            checkCity(oldcity)
+        }
+        
         
     })
     
-    //add Cities to search list
-    const ul = $("ul").addClass('list-group'); //get 'ul' element by tag
+
         
     
     
@@ -72,15 +80,21 @@ $(document).ready(function() {
         console.log("in checkCity: ", getCity);
         if (!getCity) {
             console.log("going to getLocation");
-            queryURL = getLocation(getCity);
+            // queryURL = getLocation(getCity);
+            $(".alert").show().text("Please enter a City to Search.");
         } 
         else {
-            console.log("going to buildURL");
-
+            console.log("going to buildURL", getCity);
+            // searchHistory.unshift(getCity);
+            $(".alert").hide();
             buildURL(getCity);
         }
     }
     
+    function renderBtns(getCity) {
+        ul.prepend("<li class='list-group-item btn'>" + getCity + "</li>");
+    }
+
     
     function buildURL (getCity){
         if (getCity === ""){
@@ -122,14 +136,25 @@ $(document).ready(function() {
                 var iconUrl = "https://openweathermap.org/img/w/" + iconCode + ".png";
                 console.log("current city: ", cityName);
                 $("#weatherIcon").html("<img src='" + iconUrl  + "'>");
+                
                 //add to searched list
-                ul.prepend("<li class='list-group-item'>" + getCity + "</li>");
-                localStorage.setItem("city", getCity);
+                var found = searchHistory.find(city => city === getCity)
+                if(!found){
+                    searchHistory.push(getCity)
+                    localStorage.setItem("city", JSON.stringify(searchHistory));
+                    renderBtns(getCity);
+                    
+                }
+                forecastAPI();
+                     
+
             })
             .catch(function (error) {
                 console.log("Unable to reach OpenWeatherAPI:", error);
+                $(".alert").show().text("No City found matching your Search.");
             });
-
+        
+    function forecastAPI(){
         $.ajax({
             url: queryURLforecast,
             method: "GET" 
@@ -155,10 +180,10 @@ $(document).ready(function() {
                     
                     }
                 })
-                // .catch(function (error) {
-                //     console.log("OpenWeatherAPI error:", error);
-                // });
-
+                .catch(function (error) {
+                    console.log("OpenWeatherAPI error:", error);
+                });
+        }
 
         
     };
@@ -186,19 +211,21 @@ $(document).ready(function() {
         return foundYou;  
         
     }
-
+    
+$(document).on("click", ".list-group-item", function(){
+    var cityValue = $(this).text();
+    console.log("li Clicked",cityValue);
+    $("#getCity").val("");
+    buildURL(cityValue);
+});    
        
 $("#button-addon2").on("click", function() {
     var getCity = $("#getCity").val();
     console.log("Got Input: ", getCity);
-    $(".city").html("<h1>" + getCity + " (" + currentDate + ") </h1");
+    //$(".city").html("<h1>" + getCity + " (" + currentDate + ") </h1");
     checkCity(getCity);
 })
 
-$("#list-group-item p").on("click", function(){
-    var cityValue = $(this).text();
-    getWeather(cityValue);
-});    
 
 // $(".li").on("click", function(){
 //     console.log("element clicked: ",$(this).find(".list-group-item").text());
