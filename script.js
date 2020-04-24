@@ -9,17 +9,13 @@ $(document).ready(function() {
         units: "&units=imperial&",
         uvi: "uvi?"
     };
-    // var searchHistory = [];
-    // searchHistory = JSON.parse(localStorage.getItem('city')) || []
-
+    // get recents search from localStorage searchHistory
     var searchHistory = localStorage.getItem("city") ? JSON.parse(localStorage.getItem('city')) : []
-
     console.log(searchHistory)
-    // var getCity = searchHistory[0]; //|| checkCity();
+
     //add Cities to search list used in buildURL/get currentweather
     const ul = $("ul").addClass('list-group'); //get 'ul' element by tag
     console.log("-----------------searchHistory[0]: ", searchHistory,"---------------------");
-    // var getCity = localStorage.getItem('city');
     searchHistory.forEach(function(oldcity, i){
         renderBtns(oldcity)
         if(i === searchHistory.length -1){
@@ -28,10 +24,6 @@ $(document).ready(function() {
         
         
     })
-    
-
-        
-    
     
     //need to add class to tag
     var lat;
@@ -77,7 +69,7 @@ $(document).ready(function() {
     }
 
     function checkCity(getCity){
-        console.log("in checkCity: ", getCity);
+        console.log("Line 72 in checkCity: ", getCity);
         if (!getCity) {
             console.log("going to getLocation");
             // queryURL = getLocation(getCity);
@@ -91,6 +83,7 @@ $(document).ready(function() {
         }
     }
     
+    //render saved city buttons
     function renderBtns(getCity) {
         ul.prepend("<li class='list-group-item btn'>" + getCity + "</li>");
     }
@@ -98,7 +91,7 @@ $(document).ready(function() {
     
     function buildURL (getCity){
         if (getCity === ""){
-            console.log("getCity emptystring", getCity);
+            console.log("Line 94 getCity emptystring", getCity);
             queryURL = getLocation();
             
         }
@@ -150,6 +143,7 @@ $(document).ready(function() {
 
             })
             .catch(function (error) {
+                console.log("Line 146 getCity: ", getCity);
                 console.log("Unable to reach OpenWeatherAPI:", error);
                 $(".alert").show().text("No City found matching your Search.");
             });
@@ -170,24 +164,28 @@ $(document).ready(function() {
                         $(nextDay).html(myDay);
                         let myIconCode = response.list[i].weather[0].icon;
                         myIconUrl = "https://openweathermap.org/img/w/" + myIconCode + ".png";
+                        console.log("iconURL: ", myIconUrl);
                         $(".forcastIcon").html("<img src=" + myIconUrl  + ">");
                         let myTemp = response.list[i].main.temp_max;
                         $(nextDay + "-temp").text("Temp: " + myTemp + "°F");
                         let myHumidity = response.list[i].main.humidity;
                         $(nextDay + "-humd").text("Humidity: " + myHumidity + "%");
-                    
-                    
-                    
                     }
+                    //put icon next to date displayed on main page cards
+                
                 })
                 .catch(function (error) {
                     console.log("OpenWeatherAPI error:", error);
                 });
         }
-
-        
     };
+    
+    // Examples of API calls:
+    // By geographic coordinates
+    // API call:
+    // http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat={lat}&lon={lon}
 
+    // api.openweathermap.org/data/2.5/uvi?lat=37.75&lon=-122.37
     //get location if no city entered
     function getLocation(foundYou) {
         if (navigator.geolocation) {
@@ -199,7 +197,7 @@ $(document).ready(function() {
         console.log("In getLocation & returning foundYou: ", foundYou);
         return foundYou;
     }
-
+    // get lat, lon - coordinates of the location of your interest (latitude/longitude)
     function showPosition(position) {
         var foundYou;
         lat = position.coords.latitude;
@@ -220,20 +218,13 @@ $(document).on("click", ".list-group-item", function(){
     buildURL(cityValue);
 });    
        
-$("#button-addon2").on("click", function() {
+$("#button-addon2").click(function(event) {
+    event.preventDefault();
     var getCity = $("#getCity").val();
-    console.log("Got Input: ", getCity);
+    console.log("Line 223 Got Input: ", getCity);
     //$(".city").html("<h1>" + getCity + " (" + currentDate + ") </h1");
     checkCity(getCity);
 })
-
-
-// $(".li").on("click", function(){
-//     console.log("element clicked: ",$(this).find(".list-group-item").text());
-// });
-
-    //const searchbox = document.querySelector('#button-addon2');
-    //searchbox.addEventListener('keypress', setQuery);
 
     //example of how to call openWeather by coordinates
     // api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={your api key}
@@ -247,16 +238,4 @@ $("#button-addon2").on("click", function() {
 
     //example of how to call openWeatherAPI by City and State
     //api.openweathermap.org/data/2.5/forecast?q={city name},{state}&appid={your api key}
-
-    // By geographic coordinates
-    // API call:
-    // http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat={lat}&lon={lon}
-    // Parameters:
-
-    // appid - personal API key
-
-    // lat, lon - coordinates of the location of your interest (latitude/longitude)
-    // Examples of API calls:
-
-    // api.openweathermap.org/data/2.5/uvi?lat=37.75&lon=-122.37
 });

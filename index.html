@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css"> -->
 
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/moment"></script>
@@ -27,13 +27,15 @@
         <div class="col-3-sm">
           <div class="card bg-light" style="width: 18rem;">
             <div class="card-body">
+              <form action="" class="form-inline my-2 my-lg-0">
               <h5 class="card-title dark-text">Search for a City:</h5>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="getCity" placeholder="Enter City" aria-label="City" aria-describedby="button-addon2">
+                <input type="text" class="form-control mr-0" id="getCity" placeholder="Enter City" aria-label="City" aria-describedby="button-addon2">
                 
                 <div class="input-group-append">
-                  <button class="btn btn-outline-primary" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+                  <button class="btn btn-outline-primary mr-0" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                 </div>
+              </form>  
                 <div class="alert alert-warning" role="alert">
                   Please enter a city to Search.
                 </div>
@@ -51,7 +53,7 @@
           <div class="card bg-light " style="width: auto;">
             <div class="card-body">
               <div id="weatherIcon"></div>
-              <div class="text-left dark-text city"><span id="search-city">Atlanta</span>  (<span>Today</span>) </div>
+              <div class="text-left dark-text city"><span id="search-city">No Search Entered</span>  (<span>Today</span>) </div>
               
               
               <h4 class="dark-text text-left" id="search-city-temp">Temprature: <span></span>°F</h4> <!--'alt 0176' on the number pad is degree symbol-->
