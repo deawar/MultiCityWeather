@@ -160,12 +160,14 @@ $(document).ready(function() {
                     for(var i = 0; i < 5; i++) {
                         let myDay = moment().add((1 + i),'day').format('l');
                         let nextDay = "#day" + (i + 1);
+                        let icon = nextDay + "-icon";
                         console.log("line 144 In for loop :", nextDay, i);
                         $(nextDay).html(myDay);
+                        console.log("Icon: ",icon);
                         let myIconCode = response.list[i].weather[0].icon;
                         myIconUrl = "https://openweathermap.org/img/w/" + myIconCode + ".png";
                         console.log("iconURL: ", myIconUrl);
-                        $(".forcastIcon").html("<img src=" + myIconUrl  + ">");
+                        $(icon).html("<img src=" + myIconUrl  + ">");
                         let myTemp = response.list[i].main.temp_max;
                         $(nextDay + "-temp").text("Temp: " + myTemp + "°F");
                         let myHumidity = response.list[i].main.humidity;
